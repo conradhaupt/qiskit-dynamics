@@ -175,22 +175,25 @@ class Sampler(BaseTransferFunction):
 
 
 class IQMixer(BaseTransferFunction):
-    """
+    r"""
     Implements an IQ Mixer. The IQ mixer takes as input three signals:
-    - in-phase signal: I cos(w_if t + phi_I)
-    - quadrature: Q cos(w_if t + phi_Q)
-    - local oscillator: K cos(w_lo t)
+    - in-phase signal: :math:`I\cos(w_{if} t + \phi_I)`
+    - quadrature: :math:`Q\cos(w_{if} t + \phi_Q)`
+    - local oscillator: :math:`K \cos(w_{lo} t)`
 
     In this implementation the local oscillator is specified by its frequency
-    w_lo and, without loss of generality we assume K = 1. Furthermore, we
-    require that the carrier frequency of the I and Q be identical.
+    :math:`w_{lo}` and, without loss of generality we assume K = 1. Furthermore,
+    we require that the carrier frequency of the I and Q be identical.
 
     The output RF signal is defined by
 
-    s_rf = I [cos(wp t + phi_I) + cos(wm t + phi_I)]/2
-         + Q [cos(wp t + phi_Q - pi/2) + cos(wm t + phi_Q + pi/2)]/2
+    .. math::
+        \begin{eqnarray}
+        s_rf & = \frac{I}{2} [\cos(w_p t + \phi_I) + \cos(w_m t + \phi_I)]/2    \\
+        & + \frac{Q}{2} [\cos(w_p t + \phi_Q - \pi/2) + \cos(w_m t + \phi_Q + \pi/2)]
+        \end{eqnarray}
 
-    where wp = w_lo + w_if and wp = w_lo - w_if.
+    where :math:`wp = w_{lo} + w_{if} and w_p = w_{lo} - w_{if}`.
 
     The output of this transfer function will produce a piece-wise constant
     that does not have a carrier frequency or phase. All information is in the
